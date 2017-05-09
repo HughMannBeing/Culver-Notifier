@@ -16,7 +16,7 @@ def getDistTo(testCords, newLocation):
     newLocation = getLocation.getCords(newLocation)
     difLat = abs(latitude - newLocation[0])
     difLong = abs(longitude - newLocation[1])
-    totalDist = sqrt(difLat ** 2 + difLong ** 2) 
+    totalDist = sqrt(difLat ** 2 + difLong ** 2)
     return totalDist
 
 def createMail(newLocation):
@@ -26,7 +26,7 @@ def createMail(newLocation):
     fromaddr = "hughmannguy@gmail.com"
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login(fromaddr, "Zntx-172942")
+    server.login(fromaddr, "") #generally the pass word goes here...
     for i in masterList:
         if i in specialCases:
             #Do something fancy to get the distance, and be fancy
