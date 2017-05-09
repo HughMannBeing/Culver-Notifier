@@ -2,6 +2,7 @@ from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 import updateUser
 from math import sqrt
+import geoLocation
 
 masterList = []
 specialCases = {}
@@ -12,7 +13,11 @@ def getDistTo(testCords, newLocation):
     latitude = str(testCords)[0:5]
     longitude = str(testCords)[5:len(testCords)]
     #newLocation might have to use something alittle more complicated, but we'll cross that brige later
-    return 100
+    newLocation = getLocation.getCords(newLocation)
+    difLat = abs(latitude - newLocation[0])
+    difLong = abs(longitude - newLocation[1])
+    totalDist = sqrt(difLat ** 2 + difLong ** 2) 
+    return totalDist
 
 def createMail(newLocation):
     masterList = updateUser.updateList()
