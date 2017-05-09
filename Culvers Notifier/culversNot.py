@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib2
 from time import sleep
-import smtplib
 import os
 import platform
 import informMen
@@ -32,7 +31,7 @@ def checkOpenings():
     if "Culver's" in str(tweets[0])[104:116] and ((str(checkCity)[0:4] in str(tweets[0])[117:128]) == False):
         print "Found new opening!"
         newCity = str(tweets[0])[117:128]
-        informTheMen(newCity)
+        informMen.createMail(newCity)
         updateCity(newCity)
     else:
         print "No new opening found..."
