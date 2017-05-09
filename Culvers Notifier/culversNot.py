@@ -2,21 +2,17 @@ from bs4 import BeautifulSoup
 import urllib2
 from time import sleep
 import smtplib
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
 import os
 import platform
+import informMen
+import updateUser
 
 #Approved by #5
 
 if platform.system() == 'Windows':
-    emailListFile = str(os.path.dirname(os.path.abspath(__file__)) + '\emailList.txt')
     recentTweet = str(os.path.dirname(os.path.abspath(__file__)) + '\store.txt')
 else:
-    emailListFile = str(os.path.dirname(os.path.abspath(__file__)) + '/emailList.txt')
     recentTweet = str(os.path.dirname(os.path.abspath(__file__)) + '/store.txt')
-
-emailList = []
 
 def getCity():
     store = []
@@ -47,42 +43,6 @@ def updateCity(city):
     target.truncate()
     target.write(str(city))
     target.close()
-
-def informTheMen(city):
-    updateList()
-    print "Informing the men..."
-    fromaddr = "hughmannguy@gmail.com"
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(fromaddr, "Zntx-172942")
-    for i in range(0, len(emailList)):
-        msg = MIMEMultipart()
-        msg['From'] = fromaddr
-        msg['To'] = str(emailList[i])
-        msg['Subject'] = "A new culvers has opened!"
-        body = "A new culver's has opened in "+ str(city) + "! Can you believe it? Another one!"
-        msg.attach(MIMEText(body, 'plain'))
-        text = msg.as_string()
-        server.sendmail(fromaddr, str(emailList[i]), text)
-    server.quit()
-    print "Men have been informed..."
-
-def updateList():
-    if os.path.exists(recentTweet):
-        pass
-    else:
-        target = open(recentTweet, "w+")
-        target.close()
-    if os.path.exists(emailListFile):
-        with open(emailListFile) as target:
-            for i, line in enumerate(target):
-                emailList.append(str(line))
-        target.close()
-    else:
-        target = open(emailListFile, "w+")
-        target.write("hughmannguy@gmail.com")
-        target.close()
-    print "Email List has been updated..."
 
 while True:
     checkOpenings()
